@@ -1,0 +1,6 @@
+post/signup
+accepts:name,usename,email,password,mobile,
+
+post/login;
+accepts: username,password;
+return id,name of user ,token

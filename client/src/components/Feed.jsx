@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './Feed.css'
-import db from './firebase'
 import MessageSender from './MessageSender'
 import Post from './Post'
 import StoryReel from './StoryReel'
@@ -9,9 +8,7 @@ const Feed = () => {
   const [posts,setPosts] = useState([])
 
   useEffect(()=>{
-      db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot=>(
-        setPosts(snapshot.docs.map(doc=>({id : doc.id, data: doc.data()})))
-      ))
+     
   },[])
 
   let data=[{profilepic:"https://media-exp2.licdn.com/dms/image/C4D03AQGHGPFxhTs9MA/profile-displayphoto-shrink_800_800/0/1643270542027?e=1663200000&v=beta&t=KQPpeHGe9gP8sHZcomTSHBbp5K6MBhjKAn1byeGj0Yg",

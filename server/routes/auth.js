@@ -19,7 +19,7 @@ authRouter.post("/signup", (req, res) => {
           gender,
         });
         await user.save();
-        res.send(user);
+        res.send({"msg":"signup successfull"});
       } else {
         res.send("Some error occured");
       }
@@ -31,12 +31,14 @@ authRouter.post("/signup", (req, res) => {
 
 authRouter.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  // console.log(username,password);
+
   const user = await UserModel.findOne({ username });
-  try {
-    let hash = user.password;
+    
     if (user) {
+      let hash = user.password;
       bcrypt.compare(password, hash, function (err, result) {
-        if (!err) {
+        if (result===true) {
           let token = jwt.sign({ username }, "secret", { expiresIn: "1h" });
           res.send({ msg: "logged in", token });
         } else {
@@ -45,8 +47,8 @@ authRouter.post("/login", async (req, res) => {
       });
     } else {
       res.send("Invalid User");
-    }
-  } catch (error) {}
+  }
+
 });
 
 module.exports = authRouter;

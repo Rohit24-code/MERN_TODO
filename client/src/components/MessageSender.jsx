@@ -6,8 +6,6 @@ import React, { useState } from 'react'
 import './MessageSender.css'
 import { useContext } from 'react'
 import { AppContext } from './AppContext'
-import firebase from "firebase/compat/app";
-import db from './firebase'
 export function MessageSender() {
 
   const {isAuth} = useContext(AppContext)
@@ -18,12 +16,7 @@ export function MessageSender() {
     const handleSubmit=(e)=>{
         e.preventDefault()
 
-        db.collection('posts').add({
-          message: input,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          profilePIC: isAuth.photoURL,
-          image: imageurl
-        })
+     
         
         setInput("")
         setImageurl("")

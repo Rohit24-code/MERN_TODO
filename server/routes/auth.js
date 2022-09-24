@@ -39,7 +39,7 @@ authRouter.post("/login", async (req, res) => {
       let hash = user.password;
       bcrypt.compare(password, hash, function (err, result) {
         if (result===true) {
-          let token = jwt.sign({ username }, "secret", { expiresIn: "1h" });
+          let token = jwt.sign({ userId:user._id }, "secret", { expiresIn: "1h" });
           res.send({ msg: "logged in", token });
         } else {
           res.send("Not a valid user");

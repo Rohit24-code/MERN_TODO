@@ -9,6 +9,7 @@ const authenication=(req,res,next)=>{
             jwt.verify(token, "secret", function (err, decoded) {
               if (!err) {
                 // res.send(decoded.username); // bar
+                req.body.userId= decoded.userId
                 next();
               } else {
                 res.send("invalid user");

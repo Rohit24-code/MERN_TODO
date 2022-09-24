@@ -1,18 +1,13 @@
-
-import { useContext } from 'react';
 import './App.css';
-import { AppContext } from './components/AppContext';
-import Login from './components/Login';
-// import signup from './components/signup';
+import Login from './pages/Login';
 import {Routes,Route} from 'react-router-dom'
-import Signup from './components/signup';
-import Home from '@mui/icons-material/Home';
+import Signup from './pages/Signup';
+import Home from './pages/Home';
+
 function App() {
- const { isAuth} = useContext(AppContext);
+//  const { isAuth} = useContext(AppContext);
 
   return (
-    <div className="app">
-      {
         <>
             <Routes>
              <Route path="/" element={<Login/>}/> 
@@ -20,8 +15,6 @@ function App() {
              <Route path="/home" element={<Home/>}/> 
             </Routes>
         </>
-      }
-    </div>
   );
 }
 

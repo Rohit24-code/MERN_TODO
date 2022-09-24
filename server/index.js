@@ -15,7 +15,8 @@ app.use(express.json());
 app.use(cors())
 app.use("/auth",authRouter)
 app.use(authenication)
-app.use("/feed",FeedRouter)
+app.use("/todo",FeedRouter)
+
 
 
 app.listen(PORT,async()=>{

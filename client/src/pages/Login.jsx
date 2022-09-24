@@ -1,17 +1,17 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import './Login.css'
 import Button from "@mui/material/Button";
-import { AppContext } from './AppContext';
 import { inputClasses, TextField } from '@mui/material';
 import { useState } from 'react';
 import axios from "axios"
+import { NavLink, useNavigate } from 'react-router-dom';
+
 
 
 
 function Login() {
-    const{isAuth,SetIsAuth}=useContext(AppContext)
     const [formData,setFormData]= useState({})
-    
+    const nav= useNavigate()
     const handleChange=(e)=>{
       const{value,name}=e.target
       setFormData(
@@ -22,9 +22,12 @@ function Login() {
 
     const onclicking=async(e)=>{
       e.preventDefault()
-      console.log(formData);
     const {data}= await axios.post("http://localhost:8080/auth/login",formData)
-        console.log(data)
+   
+        localStorage.setItem("token", data.token);
+        if(data.token){
+             nav("/home")
+        }
     }
 
   return (
@@ -46,14 +49,12 @@ function Login() {
       >
         <TextField
           fullWidth="true"
-          // id="outlined-basic"
           label="Username"
           variant="outlined"
           name="username"
           onChange={handleChange}
         />
         <TextField
-          // id="outlined-basic"
           label="password"
           variant="outlined"
           name="password"
@@ -69,6 +70,7 @@ function Login() {
           Login
         </Button>
       </form>
+      <NavLink to="/signup">Now signed up ,Do it now </NavLink>
     </div>
   );
 }

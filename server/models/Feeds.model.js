@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const FeedSchema = mongoose.Schema({
 "userId":String,
-"title":String,
-"image":String,
-"description":String,
-"tag":[String]
+"todo":String,
+"iscompleted":{type:Boolean,default:false}
+},{
+    timestamps:true
 });
 
-const FeedModel = mongoose.model("Feed", FeedSchema);
+const FeedModel = mongoose.model("Todo", FeedSchema);
 
 module.exports = FeedModel;

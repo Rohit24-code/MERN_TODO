@@ -3,13 +3,11 @@ const {Router}= require("express");
 const FeedModel = require("../models/Feeds.model");
 const UserModel = require("../models/User.model");
 const FeedRouter = Router();
-const cloudinary= require("cloudinary")
-const fileUploader= require("express-fileupload")
 
 
 FeedRouter.get("/profile",async(req,res)=>{
   const {userId}= req.body
-  console.log(req.body)
+  // console.log(req.body)
   try {
     const user = await UserModel.findOne({ _id: userId });
     if (user) {
@@ -38,16 +36,15 @@ FeedRouter.get("/",async(req,res)=>{
 
 FeedRouter.post("/create",async(req,res)=>{
   try {
-    const { title, image, description, tag,userId } = req.body;
-    const new_feed = new FeedModel({
-      title,
-      image,
-      description,
-      tag,
-      userId,
+    const { todo,iscompleted,userId } = req.body;
+    // console.log(req.body);
+    const data = new FeedModel({
+      todo,
+      iscompleted,
+      userId
     });
-    await new_feed.save();
-    res.send({ msg: "feed created", new_feed }); 
+    await data.save();
+    res.json({ msg: "Todo Created",data}); 
   } catch (error) {
     res.send(error)
   }
@@ -55,11 +52,11 @@ FeedRouter.post("/create",async(req,res)=>{
 
 
 //just update a particular part
-FeedRouter.patch("/edit/:feedId",async(req,res)=>{
-  const {feedId} = req.params
+FeedRouter.patch("/edit/:todoId",async(req,res)=>{
+  const {todoId} = req.params
   const {userId}= req.body
   try {
-  const updateFeed=await FeedModel.findOneAndUpdate({ _id: feedId, userId} ,{...req.body});
+  const updateFeed=await FeedModel.findOneAndUpdate({ _id: todoId, userId} ,{...req.body});
   if(updateFeed){
  res.send("Update");  
   }else{
@@ -70,11 +67,11 @@ FeedRouter.patch("/edit/:feedId",async(req,res)=>{
   }
 })
 
-FeedRouter.delete("/delete/:feedId",async(req,res)=>{
-  const {feedId} = req.params
+FeedRouter.delete("/delete/:todoId",async(req,res)=>{
+  const {todoId} = req.params
   const {userId}= req.body
   try {
-  const deleteFeed=await FeedModel.findOneAndDelete({ _id: feedId, userId });
+  const deleteFeed=await FeedModel.findOneAndDelete({ _id: todoId, userId });
   if(deleteFeed){
  res.send("Deleted");  
   }else{

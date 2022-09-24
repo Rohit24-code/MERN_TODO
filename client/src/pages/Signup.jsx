@@ -1,9 +1,11 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
  const [udata,setData]=useState({})
+ const nav= useNavigate()
 
  const handleChange=(e)=>{
     let{name,value}=e.target
@@ -14,8 +16,18 @@ const Signup = () => {
 
  const submitData= async (e)=>{
       e.preventDefault()
-      let {data} = await axios.post("http://localhost:8080/auth/signup", udata);
-      console.log(data);
+      try {
+        let { data } = await axios.post(
+          "http://localhost:8080/auth/signup",
+          udata
+        );
+        alert(data.msg)
+        nav("/")
+      } catch (error) {
+        console.log(error);
+      }
+      
+       
  }
   return (
     <div
@@ -74,7 +86,7 @@ const Signup = () => {
             name="country"
             variant="filled"
           />
-          {/* <FormControl fullWidth> */}
+          
             
             <Select
               labelId="demo-simple-select-label"
@@ -88,7 +100,7 @@ const Signup = () => {
               <MenuItem value="female">Female</MenuItem>
               <MenuItem value="unspecified">Unspecified</MenuItem>
             </Select>
-          {/* </FormControl> */}
+      
           <Button onClick={submitData} >Sign in</Button>
         </FormControl>
       </div>

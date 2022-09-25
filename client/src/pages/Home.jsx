@@ -12,16 +12,19 @@ const Home = () => {
 
 // console.log(todos);
 
-  const handleChange = async () => {
+  const handleChange = async (id=null) => {
     let token = localStorage.getItem("token");
-    let { data } = await axios({
-      method: "post",
-      url: "http://localhost:8080/todo/create",
-      data: { todo, iscompleted },
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    });
+
+          let { data } = await axios({
+            method: "post",
+            url: "http://localhost:8080/todo/create",
+            data: { todo, iscompleted },
+            headers: {
+              Authorization: `bearer ${token}`,
+            },
+          });
+    
+
     getData();
     setTodo("")
     setEdit(false)
@@ -118,7 +121,8 @@ const Home = () => {
           {todos.map((e) => (
             <div key={e._id} style={{ display: "flex", gap: "10px" }}>
               <h5>{e.todo}</h5>
-              <button onClick={()=>handleEdit(e._id)}>Edit</button>
+              {/* <h4 onClick={()=>setEdit(!edit)}>{edit ? "completed" :"Incomplete"}</h4> */}
+              {/* <button onClick={()=>handleEdit(e._id)}>Edit</button> */}
               <button onClick={() => handleDelete(e._id)}>Delete</button>
             </div>
           ))}
